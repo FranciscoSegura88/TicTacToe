@@ -6,8 +6,9 @@ public class game extends Frame implements MouseListener{
 MenuBar mb;
 Menu m1, m2, m3;
 MenuItem mi1, mi2, mi3, mi4;
-Panel gameBoard, header; 
+Panel gameBoard, header, footer; 
 Button gb[]; 
+Label announcer;
 
     game(){
         //FRAME ATRIBUTES
@@ -28,20 +29,23 @@ Button gb[];
          //PANEL
          header= new Panel();
          gameBoard = new Panel();
+         footer = new Panel();
+         announcer = new Label("Announcer:");
          //Buttons
-         gb = new Button[5];
+         gb = new Button[9];
 
          //SETTING THE LAYOUTS TO ACCOMODATE THE GAME BOARD
          gameBoard.setLayout(new GridLayout(3, 3));
 
-        
-         this.addWindowListener(new WindowAdapter(){          //CLOSING WINDOW EVENT
+        //CLOSING WINDOW EVENT
+         this.addWindowListener(new WindowAdapter(){          
           public void windowClosing(WindowEvent windowEvent){
            System.exit(0);
           }      
          });
          
-         for(int i = 0; i <= gb.length; i++){
+         for(int i = 0; i < gb.length; i++){
+            gb[i] = new Button();
             gameBoard.add(gb[i]);
          }
 
@@ -50,8 +54,12 @@ Button gb[];
         mb.add(m1);
         mb.add(m2);
         mb.add(m3);
+        footer.add(announcer);
 
+    //ADD PANEL TO THE FRAME
         add(gameBoard, BorderLayout.CENTER);
+        add(header, BorderLayout.NORTH);
+        add(footer, BorderLayout.SOUTH);
 
     }
 
