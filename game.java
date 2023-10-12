@@ -13,8 +13,9 @@ Label announcer, score;
     game(){
         //FRAME ATRIBUTES
         super("TicTacToe");
-        setSize(600,400);
+        setSize(500,500);
         setVisible(true);
+        setResizable(false);
         addMouseListener(this);
         
         //INITIALIZE
@@ -45,6 +46,7 @@ Label announcer, score;
           }      
          });
          
+         //ADDING THE BUTTONS TO THE GAMEBOARD
          for(int i = 0; i < gb.length; i++){
             gb[i] = new Button();
             gameBoard.add(gb[i]);
