@@ -8,7 +8,7 @@ Menu m1, m2, m3;
 MenuItem mi1, mi2, mi3, mi4;
 Panel gameBoard, header, footer; 
 Button gb[]; 
-Label announcer;
+Label announcer, score;
 
     game(){
         //FRAME ATRIBUTES
@@ -31,7 +31,8 @@ Label announcer;
          gameBoard = new Panel();
          footer = new Panel();
          announcer = new Label("Announcer:");
-         //Buttons
+         score = new Label("Score:");
+         //BUTTONS
          gb = new Button[9];
 
          //SETTING THE LAYOUTS TO ACCOMODATE THE GAME BOARD
@@ -54,6 +55,7 @@ Label announcer;
         mb.add(m1);
         mb.add(m2);
         mb.add(m3);
+        header.add(score);
         footer.add(announcer);
 
     //ADD PANEL TO THE FRAME
