@@ -16,7 +16,6 @@ Label announcer, score;
         setSize(500,500);
         setVisible(true);
         setResizable(false);
-        addMouseListener(this);
         
         //INITIALIZE
         //MENUBAR
@@ -50,6 +49,7 @@ Label announcer, score;
          for(int i = 0; i < gb.length; i++){
             gb[i] = new Button();
             gameBoard.add(gb[i]);
+            gb[i] = addMouseListener(this); //For some reason this is wrong... 
          }
 
      //ADD 
@@ -66,12 +66,20 @@ Label announcer, score;
         add(footer, BorderLayout.SOUTH);
 
     }
-
+    
     //MOUSE EVENTS
-    public void mouseClicked(MouseEvent e){}
+    public void mouseClicked(MouseEvent e){
+        //TESTING 
+        if(e.getSource().equals(gb[0]))
+            System.out.println("Presionaste la casilla 1.");
+    }
+
     public void mouseEntered(MouseEvent e){}
+    
     public void mouseExited(MouseEvent e){}
+    
     public void mousePressed(MouseEvent e){}
+    
     public void mouseReleased(MouseEvent e){}
 
     public static void main(String[] args){
