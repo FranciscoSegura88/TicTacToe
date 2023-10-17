@@ -9,6 +9,7 @@ MenuItem mi1, mi2, mi3, mi4;
 Panel gameBoard, header, footer; 
 Button gb[]; 
 Label announcer, score;
+int player;
 
     game(){
         //FRAME ATRIBUTES
@@ -18,6 +19,7 @@ Label announcer, score;
         setResizable(false);
         
         //INITIALIZE
+        player = 0; //Player
         //MENUBAR
          mb = new MenuBar ();
          m1 = new Menu("Nuevo Juego");
@@ -48,8 +50,8 @@ Label announcer, score;
          //ADDING THE BUTTONS TO THE GAMEBOARD
          for(int i = 0; i < gb.length; i++){
             gb[i] = new Button();
+            gb[i].addMouseListener(this); //Dumbest fucking mistake in my life
             gameBoard.add(gb[i]);
-            gb[i] = addMouseListener(this); //For some reason this is wrong... 
          }
 
      //ADD 
@@ -68,17 +70,31 @@ Label announcer, score;
     }
     
     //MOUSE EVENTS
-    public void mouseClicked(MouseEvent e){
-        //TESTING 
-        if(e.getSource().equals(gb[0]))
-            System.out.println("Presionaste la casilla 1.");
-    }
+    public void mouseClicked(MouseEvent e){}
 
     public void mouseEntered(MouseEvent e){}
     
     public void mouseExited(MouseEvent e){}
     
-    public void mousePressed(MouseEvent e){}
+    public void mousePressed(MouseEvent e){
+        for(int i = 0; i < gb.length; i++){
+            if(player == 0){
+                if(e.getSource().equals(gb[i])){ //When you click a button 
+                    if(gb[i].getLabel().isEmpty()){ //Checks if its empty
+                        gb[i].setLabel("X"); //Sets X
+                            player = 1; //Switch over to O
+                    }
+                }
+            }else{
+                if(e.getSource().equals(gb[i])){ //When you click a button 
+                    if(gb[i].getLabel().isEmpty()){ //Checks if its empty
+                        gb[i].setLabel("O"); //Sets O
+                            player = 0; //Switch over to O
+                    }
+                }
+            }
+        }
+    }
     
     public void mouseReleased(MouseEvent e){}
 
