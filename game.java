@@ -68,7 +68,7 @@ int player;
         add(footer, BorderLayout.SOUTH);
 
     }
-    
+
     //MOUSE EVENTS
     public void mouseClicked(MouseEvent e){}
 
@@ -77,6 +77,7 @@ int player;
     public void mouseExited(MouseEvent e){}
     
     public void mousePressed(MouseEvent e){
+
         for(int i = 0; i < gb.length; i++){
             if(player == 0){
                 if(e.getSource().equals(gb[i])){ //When you click a button 
@@ -94,6 +95,7 @@ int player;
                 }
             }
         }
+            
     }
     
     public void mouseReleased(MouseEvent e){}
