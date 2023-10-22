@@ -1,14 +1,13 @@
 import java.awt.*;
 import java.awt.event.*;
 
-public class game extends Frame implements MouseListener{
+public class game extends Frame implements MouseListener, ActionListener{
 //DECLARE
 MenuBar mb;
-Menu m1, m2, m3;
-MenuItem mi1, mi2, mi3, mi4;
-Panel gameBoard, header, footer; 
+Menu m1;
+Panel gameBoard, footer; 
 Button gb[]; 
-Label announcer, score;
+Label announcer;
 int player;
 
     game(){
@@ -22,18 +21,11 @@ int player;
         player = 0; //Player
         //MENUBAR
          mb = new MenuBar ();
-         m1 = new Menu("Nuevo Juego");
-         m2 = new Menu("Opciones");
-         m3 = new Menu("Ayuda");
-         mi1 = new MenuItem("");
-         mi2 = new MenuItem("");
-         mi3 = new MenuItem("");
+         m1 = new Menu("New Game");
          //PANEL
-         header= new Panel();
          gameBoard = new Panel();
          footer = new Panel();
          announcer = new Label("Announcer:");
-         score = new Label("Score:");
          //BUTTONS
          gb = new Button[9];
 
@@ -46,7 +38,9 @@ int player;
            System.exit(0);
           }      
          });
-         
+
+        m1.addActionListener(this);
+
          //ADDING THE BUTTONS TO THE GAMEBOARD
          for(int i = 0; i < gb.length; i++){
             gb[i] = new Button();
@@ -57,16 +51,57 @@ int player;
      //ADD 
         setMenuBar(mb);
         mb.add(m1);
-        mb.add(m2);
-        mb.add(m3);
-        header.add(score);
         footer.add(announcer);
 
     //ADD PANEL TO THE FRAME
         add(gameBoard, BorderLayout.CENTER);
-        add(header, BorderLayout.NORTH);
         add(footer, BorderLayout.SOUTH);
 
+    }
+
+    public boolean Win(){
+
+            // Define the winning combinations (rows, columns, and diagonals)
+            int[][] winCombinations = {
+                {0, 1, 2}, {3, 4, 5}, {6, 7, 8}, // Rows
+                {0, 3, 6}, {1, 4, 7}, {2, 5, 8}, // Columns
+                {0, 4, 8}, {2, 4, 6} // Diagonals
+            };
+        
+            // Check each winning combination
+            for (int[] combo : winCombinations) {
+                int a = combo[0];
+                int b = combo[1];
+                int c = combo[2];
+        
+                if (!gb[a].getLabel().isEmpty() &&
+                    gb[a].getLabel().equals(gb[b].getLabel()) &&
+                    gb[a].getLabel().equals(gb[c].getLabel())) {
+                    
+                    //CHANGE BG TO WINNING COMBINATION
+                    gb[a].setBackground(Color.GREEN);
+                    gb[b].setBackground(Color.GREEN);
+                    gb[c].setBackground(Color.GREEN);
+
+                    return true; // We found a winning combination
+                    
+                }
+            }
+        
+            return false; // No winning combination found
+    }
+    //ACTIONS EVENTS
+    public void actionPerformed(ActionEvent e){ //<-NOT WORKING
+        //New game
+        if(e.getSource().equals(m1)){
+            for(int i = 0; i < gb.length; i++){
+                gb[i].setLabel("");
+                gb[i].setBackground(null);
+            }
+        announcer.setText("");
+        player = 0;
+        //System.out.pritnln("Estas presionando New Game"); //TEST
+        }
     }
 
     //MOUSE EVENTS
@@ -77,24 +112,37 @@ int player;
     public void mouseExited(MouseEvent e){}
     
     public void mousePressed(MouseEvent e){
-
-        for(int i = 0; i < gb.length; i++){
-            if(player == 0){
-                if(e.getSource().equals(gb[i])){ //When you click a button 
-                    if(gb[i].getLabel().isEmpty()){ //Checks if its empty
-                        gb[i].setLabel("X"); //Sets X
-                            player = 1; //Switch over to O
-                    }
+    boolean allButtonsFilled = true;
+    
+    for (int i = 0; i < gb.length; i++) {
+        if (player == 0) {
+            if (e.getSource().equals(gb[i])) {
+                if (gb[i].getLabel().isEmpty() && !Win()) { // Checks if it's empty and no win yet
+                    gb[i].setLabel("X"); // Sets X
+                    player = 1; // Switch over to O
                 }
-            }else{
-                if(e.getSource().equals(gb[i])){ //When you click a button 
-                    if(gb[i].getLabel().isEmpty()){ //Checks if its empty
-                        gb[i].setLabel("O"); //Sets O
-                            player = 0; //Switch over to O
-                    }
+            }
+        } else {
+            if (e.getSource().equals(gb[i])) {
+                if (gb[i].getLabel().isEmpty() && !Win()) { // Checks if it's empty and no win yet
+                    gb[i].setLabel("O"); // Sets O
+                    player = 0; // Switch over to X
                 }
             }
         }
+        
+        if (gb[i].getLabel().isEmpty()) {
+            allButtonsFilled = false;
+        }
+    }
+    
+    if (Win() && player == 0) {
+        announcer.setText("O wins!");
+    } else if (Win() && player == 1) {
+        announcer.setText("X wins!");
+    } else if (allButtonsFilled) {
+        announcer.setText("It's a tie!");
+    }
             
     }
     
