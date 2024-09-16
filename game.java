@@ -89,10 +89,13 @@
         }
 
         //MOUSE EVENTS
+        @Override
         public void mouseClicked(MouseEvent e){}
-
-        public void mouseEntered(MouseEvent e){}
         
+        @Override
+        public void mouseEntered(MouseEvent e){}
+
+        @Override
         public void mouseExited(MouseEvent e){}
         
         public void mousePressed(MouseEvent e){
